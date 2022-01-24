@@ -1,0 +1,33 @@
+: 1643026346:0;gcc --version
+: 1643026352:0;gdb
+: 1643026366:0;sudo apt-get install gdb
+: 1643026386:0;gdb --version
+: 1643028166:0;sudo apt-get install menulibre
+: 1643028197:0;menulibre --version
+: 1643028327:0;env
+: 1643028353:0;echo $PATH
+: 1643028460:0;pwd
+: 1643028650:0;git config --global user.email "rafael.cattin@etu.imt-nord-europe.fr"
+: 1643028659:0;git config --global color.diff auto
+: 1643028664:0;git config --global color.status auto
+: 1643028670:0;git config --global color.branch auto
+: 1643028676:0;git config --global alias.ci commit
+: 1643028682:0;git config --global color.branch auto
+: 1643028687:0;git config --global alias.co checkout
+: 1643028691:0;git config --global alias.st status
+: 1643028695:0;git config --global alias.br branch
+: 1643028714:0;git config --global user.name "Rafael CATTIN"
+: 1643028757:0;cd /mnt/c/Users/rafac/Documents/
+: 1643028899:0;git clone https://github.com/rcattin/ILOG.git
+: 1643028915:0;mkdir envs
+: 1643028919:0;cd envs
+: 1643028927:0;touch envs.c
+: 1643028936:0;code envs.c
+: 1643029112:0;gcc envs.c -o envs
+: 1643029115:0;ls
+: 1643029119:0;./envs
+: 1643029182:0;export PATH=.:$PATH
+: 1643029208:0;./envs
+: 1643029981:0;echo *.o >.gitignore
+: 1643030078:0;echo envs >>.gitignore
+: 1643030088:0;cp ~/.zsh_history commands.txt
