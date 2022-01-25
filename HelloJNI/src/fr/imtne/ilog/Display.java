@@ -6,11 +6,11 @@ public class Display {
 	    System.loadLibrary("HelloNative");
 	}
 	
-	private native void display(String message);
+	private native void displayLine(int iLine, String message);
 	
 	public static void main(String[] args) {
 		Display hj = new Display();
-		hj.display( "HelloJNI" );
+		hj.displayLine( 1, "Helo JNI !" );
 	}
 
 }

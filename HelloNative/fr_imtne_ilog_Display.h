@@ -9,11 +9,11 @@ extern "C" {
 #endif
 /*
  * Class:     fr_imtne_ilog_Display
- * Method:    display
- * Signature: (Ljava/lang/String;)V
+ * Method:    displayLine
+ * Signature: (ILjava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_fr_imtne_ilog_Display_display
-  (JNIEnv *, jobject, jstring);
+JNIEXPORT void JNICALL Java_fr_imtne_ilog_Display_displayLine
+  (JNIEnv *, jobject, jint, jstring);
 
 #ifdef __cplusplus
 }
