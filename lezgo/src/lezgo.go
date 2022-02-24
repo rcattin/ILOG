@@ -4,15 +4,24 @@ import (
 	"path/filepath"
 	"fmt"
 	"flag"
+	"os"
 )
 
 func main() {
 	dFlag, pFlag := parseFlags()
-	initPath, err := filepath.Abs(pFlag)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
+
+	if (!filepath.IsAbs(pFlag)){
+		wd, err := filepath.Abs(".")
+		if err != nil {
+		        panic(err)
+		}
+		initPath := filepath.Clean(wd + "/" + pFlag)
+
+	}else{
+		initPath := filepath.Clean(pFlag)
 	}
+
+	// TODO : check if filepath is real
 
 	initNode := &node{ path: initPath}
 	search := &search{}
@@ -25,10 +34,9 @@ func main() {
 func parseFlags() (string, string) {
 	var d, p string
 
-        flag.StringVar(&p, "path", ".", "The filepath where the search begins")
+	flag.StringVar(&p, "path", ".", "The filepath where the search begins")
 
 	flag.Parse()
-
 	d = flag.Args()[0]
 	return d, p
 }
