@@ -8,8 +8,8 @@ type size struct {
 	size int
 }
 
-func (s *size) visitNode(n *node) {
+func (s *size) visitNode(n *node, d string) {
     //do stuff...
-    fmt.Println("size of node ...")
+    fmt.Println("size of ", d, " ...")
     fmt.Print(s.size)
 }

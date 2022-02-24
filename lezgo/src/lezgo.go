@@ -7,9 +7,8 @@ import (
 )
 
 func main() {
-	dFlag := parseFlags()
-
-	initPath, err := filepath.Abs(dFlag)
+	dFlag, pFlag := parseFlags()
+	initPath, err := filepath.Abs(pFlag)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -17,19 +16,19 @@ func main() {
 
 	initNode := &node{ path: initPath}
 	search := &search{}
-	size := &size{ size : 0}
 
 	fmt.Println(initNode.path)
 
-	initNode.accept(search)
-	initNode.accept(size)
+	initNode.accept(search, dFlag)
 }
 
-func parseFlags() string {
-	var d string
+func parseFlags() (string, string) {
+	var d, p string
 
-        flag.StringVar(&d, "d", ".", "The filepath where the search begins")
+        flag.StringVar(&p, "path", ".", "The filepath where the search begins")
 
 	flag.Parse()
-	return d
+
+	d = flag.Args()[0]
+	return d, p
 }
