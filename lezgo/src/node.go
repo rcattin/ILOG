@@ -1,10 +1,9 @@
-
 package main
 
-type node struct{
-	path string;
+type node struct {
+	path string
 }
 
-func (n *node) accept(v visitor, d string){
-	v.visitNode(n, d)
+func (n *node) accept(v visitor, d string) bool {
+	return v.visitNode(n, d)
 }
