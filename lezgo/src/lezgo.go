@@ -32,7 +32,7 @@ func searchCmd() {
 
 	if len(os.Args[2:]) == 0 {
 		fmt.Println("Expected an argument")
-		os.Exit(1)
+		os.Exit(0)
 	}
 
 	// Get directory to search
@@ -78,6 +78,7 @@ func replicatesCmd() {
 }
 
 func noCmdError() {
-	fmt.Println("Expected a command\nList of available commands : cmd")
-	os.Exit(1)
+	fmt.Println("Expected a command")
+	fmt.Println("List of available commands : search")
+	os.Exit(0)
 }
