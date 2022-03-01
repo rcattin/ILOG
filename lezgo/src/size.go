@@ -9,15 +9,15 @@ import (
 type size struct {
 }
 
-func (s *size) visitNode(n *node, d string) bool {
+func (s *size) visitNode(n *node, args argList) bool {
 	var size int64 = 0
 
-	readSizeFunc := func(path string, d os.DirEntry, err error) error {
+	readSizeFunc := func(path string, dir os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if !d.IsDir() {
-			fileInfo, _ := d.Info()
+		if !dir.IsDir() {
+			fileInfo, _ := dir.Info()
 			size += fileInfo.Size()
 		}
 		return err

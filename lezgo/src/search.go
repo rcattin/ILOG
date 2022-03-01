@@ -9,16 +9,16 @@ import (
 type search struct {
 }
 
-func (s *search) visitNode(n *node, d string) bool {
-	//if vFlag {
-	// fmt.Println("Searching at", n.path, "...")
-	//}
+func (s *search) visitNode(n *node, args argList) bool {
+	if args.vFlag {
+		fmt.Println("Searching at", n.path, "...")
+	}
 
 	// Node is found
-	if d == filepath.Base(n.path) {
+	if args.dFlag == filepath.Base(n.path) {
 		fmt.Println(n.path)
 		// TODO : new thread
-		n.accept(&size{}, d)
+		n.accept(&size{}, args)
 		return true
 	}
 
@@ -37,7 +37,7 @@ func (s *search) visitNode(n *node, d string) bool {
 			newPath := n.path + "/" + file.Name()
 			newNode := &node{path: newPath}
 
-			foundSubDir = newNode.accept(search, d) || foundSubDir
+			foundSubDir = newNode.accept(search, args) || foundSubDir
 		}
 	}
 	return foundSubDir

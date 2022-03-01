@@ -7,6 +7,11 @@ import (
 	"path/filepath"
 )
 
+type argList struct {
+	pFlag, dFlag string
+	vFlag, hFlag bool
+}
+
 func main() {
 	// Check if a command was given
 	if len(os.Args[1:]) == 0 {
@@ -29,46 +34,19 @@ func main() {
 }
 
 func searchCmd() {
-
-	if len(os.Args[2:]) == 0 {
-		fmt.Println("Expected an argument")
-		os.Exit(0)
-	}
-
-	// Get directory to search
-	dFlag := os.Args[2]
-
-	// Get flags
-	searchSet := flag.NewFlagSet("search", flag.ExitOnError)
-	pFlag := searchSet.String("path", ".", "The directory where the search begins")
-	vFlag := searchSet.Bool("v", false /* TODO */, "Explain")
-	//hFlag := searchSet.Bool("h", false , "Print help")
-	searchSet.Parse(os.Args[3:])
-
-	// Rebuild absolute path of given directory (working directory by default)
-	var initPath string
-	if !filepath.IsAbs(*pFlag) {
-		wd, err := filepath.Abs(".")
-		if err != nil {
-			panic(err)
-		}
-		initPath = filepath.Clean(wd + "/" + *pFlag)
-
-	} else {
-		initPath = filepath.Clean(*pFlag)
-	}
+	args := getArgs()
 
 	// TODO : check if directory exists
 
 	// Setting up the search
-	initNode := &node{path: initPath}
+	initNode := &node{path: args.pFlag}
 	search := &search{}
-	if *vFlag {
+	if args.vFlag {
 		fmt.Println("Initial path :", initNode.path)
 	}
 
 	// Start of the search
-	if !initNode.accept(search, dFlag) {
+	if !initNode.accept(search, args) {
 		fmt.Println("Not Found !")
 	}
 }
@@ -81,4 +59,40 @@ func noCmdError() {
 	fmt.Println("Expected a command")
 	fmt.Println("List of available commands : search replicates")
 	os.Exit(0)
+}
+
+func getArgs() argList {
+	if len(os.Args[2:]) == 0 {
+		fmt.Println("Expected an argument")
+		os.Exit(0)
+	}
+
+	// Get directory to search
+	d := os.Args[2]
+	// Get flags
+	searchSet := flag.NewFlagSet("search", flag.ExitOnError)
+	p := searchSet.String("path", ".", "The directory where the search begins")
+	v := searchSet.Bool("v", false /* TODO */, "Explain")
+	h := searchSet.Bool("h", false, "Print help")
+	searchSet.Parse(os.Args[3:])
+
+	// Rebuild absolute path of given directory (working directory by default)
+	var absPath string
+	if !filepath.IsAbs(*p) {
+		wd, err := filepath.Abs(".")
+		if err != nil {
+			panic(err)
+		}
+		absPath = filepath.Clean(wd + "/" + *p)
+
+	} else {
+		absPath = filepath.Clean(*p)
+	}
+
+	return argList{
+		pFlag: absPath,
+		vFlag: *v,
+		hFlag: *h,
+		dFlag: d,
+	}
 }

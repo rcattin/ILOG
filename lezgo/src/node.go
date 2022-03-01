@@ -4,6 +4,6 @@ type node struct {
 	path string
 }
 
-func (n *node) accept(v visitor, d string) bool {
-	return v.visitNode(n, d)
+func (n *node) accept(v visitor, args argList) bool {
+	return v.visitNode(n, args)
 }

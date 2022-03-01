@@ -1,5 +1,5 @@
 package main
 
 type visitor interface {
-	visitNode(*node, string) bool
+	visitNode(*node, argList) bool
 }

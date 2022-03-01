@@ -4,7 +4,7 @@ type replicate struct {
 	truc *int
 }
 
-func (s *replicate) visitNode(n *node, d string) bool {
+func (s *replicate) visitNode(n *node, args argList) bool {
 
 	return true
 }
