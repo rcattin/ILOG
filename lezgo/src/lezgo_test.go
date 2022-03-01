@@ -55,14 +55,31 @@ func TestSearchA(t *testing.T) {
 	teardownFunc := setupTreeTest(t)
 	defer teardownFunc(t)
 
-	out, err := exec.Command("./lezgo", "search", "a", "-path=test").Output()
-	if err != nil {
-		t.Fail()
-	}
 	wd, _ := os.Getwd()
+	cases := []struct {
+		name  string
+		input []string
+		want  string
+	}{
+		{
+			"a",
+			[]string{"search", "a", "-path=test"},
+			wd + "/test/a\n\tSize : 100 octets\n",
+		},
+		// Add tests here
+	}
 
-	if string(out) != wd+"/test/a\n\tSize : 100 octets\n" {
-		fmt.Println(string(out))
-		t.Fail()
+	for i, tc := range cases {
+		t.Run(fmt.Sprintf("Test %d : %s", i, tc.name), func(t *testing.T) {
+			got, err := exec.Command("./lezgo", tc.input...).Output()
+			if err != nil {
+				t.Fail()
+			}
+
+			if string(got) != tc.want {
+				t.Fatalf("got %v; want %v", got, tc.want)
+				t.Fail()
+			}
+		})
 	}
 }
