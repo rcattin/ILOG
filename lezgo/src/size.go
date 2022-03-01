@@ -27,7 +27,7 @@ func (s *size) visitNode(n *node, d string) bool {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("\tSize :", string("\033[31m"), size, "octets", string("\033[0m"))
+	fmt.Println("\tSize :", size, "octets")
 
 	return true
 }

@@ -16,7 +16,7 @@ func (s *search) visitNode(n *node, d string) bool {
 
 	// Node is found
 	if d == filepath.Base(n.path) {
-		fmt.Println(n.path, "...")
+		fmt.Println(n.path)
 		// TODO : new thread
 		n.accept(&size{}, d)
 		return true

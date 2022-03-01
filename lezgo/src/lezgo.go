@@ -64,12 +64,12 @@ func searchCmd() {
 	initNode := &node{path: initPath}
 	search := &search{}
 	if *vFlag {
-		fmt.Println(string("\033[33m"), "Initial path :", initNode.path, string("\033[0m"))
+		fmt.Println("Initial path :", initNode.path)
 	}
 
 	// Start of the search
 	if !initNode.accept(search, dFlag) {
-		fmt.Println(string("\033[33m"), "Not Found !", string("\033[0m"))
+		fmt.Println("Not Found !")
 	}
 }
 
@@ -79,6 +79,6 @@ func replicatesCmd() {
 
 func noCmdError() {
 	fmt.Println("Expected a command")
-	fmt.Println("List of available commands : search")
+	fmt.Println("List of available commands : search replicates")
 	os.Exit(0)
 }
