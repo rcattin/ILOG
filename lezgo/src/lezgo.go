@@ -71,6 +71,10 @@ func getArgs() argList {
 	h := searchSet.Bool("h", false, "Print help")
 	searchSet.Parse(os.Args[2:])
 
+	if *d == "" {
+		fmt.Println("Must pass an argument")
+		os.Exit(0)
+	}
 	// Rebuild absolute path of given directory (working directory by default)
 	var absPath string
 	if !filepath.IsAbs(*p) {

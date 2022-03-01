@@ -54,7 +54,7 @@ func TestSearchNoArg(t *testing.T) {
 	if err != nil {
 		t.Fail()
 	}
-	if string(out) != "Expected an argument\n" {
+	if string(out) != "Must pass an argument\n" {
 		t.Fail()
 	}
 }
@@ -71,22 +71,22 @@ func TestSearch(t *testing.T) {
 	}{
 		{
 			"OneDir-OneFile",
-			[]string{"search", "a", "-path=test"},
+			[]string{"search", "-d=a", "-p=test"},
 			wd + "/test/a\n\tSize : 100 octets\n",
 		},
 		{
 			"OneDir-ThreeFiles",
-			[]string{"search", "h", "-path=test"},
+			[]string{"search", "-d=h", "-p=test"},
 			wd + "/test/h\n\tSize : 66 octets\n",
 		},
 		{
 			"TwoDir-Empty",
-			[]string{"search", "d", "-path=test"},
+			[]string{"search", "-d=d", "-p=test"},
 			wd + "/test/b/d\n\tSize : 0 octets\n" + wd + "/test/c/d\n\tSize : 0 octets\n",
 		},
 		{
 			"OneDir-SubDirAndFile",
-			[]string{"search", "f", "-path=test"},
+			[]string{"search", "-d=f", "-p=test"},
 			wd + "/test/c/f\n\tSize : 150 octets\n",
 		},
 		// Add tests here
