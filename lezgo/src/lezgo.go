@@ -62,19 +62,14 @@ func noCmdError() {
 }
 
 func getArgs() argList {
-	if len(os.Args[2:]) == 0 {
-		fmt.Println("Expected an argument")
-		os.Exit(0)
-	}
-
 	// Get directory to search
-	d := os.Args[2]
 	// Get flags
 	searchSet := flag.NewFlagSet("search", flag.ExitOnError)
-	p := searchSet.String("path", ".", "The directory where the search begins")
+	d := searchSet.String("d", "", "The directory to search")
+	p := searchSet.String("p", ".", "The directory where the search begins (can be relative or absolute)")
 	v := searchSet.Bool("v", false /* TODO */, "Explain")
 	h := searchSet.Bool("h", false, "Print help")
-	searchSet.Parse(os.Args[3:])
+	searchSet.Parse(os.Args[2:])
 
 	// Rebuild absolute path of given directory (working directory by default)
 	var absPath string
@@ -93,6 +88,6 @@ func getArgs() argList {
 		pFlag: absPath,
 		vFlag: *v,
 		hFlag: *h,
-		dFlag: d,
+		dFlag: *d,
 	}
 }
