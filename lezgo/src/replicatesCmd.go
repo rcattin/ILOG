@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"path/filepath"
 )
 
 type replicatesCmd struct {
@@ -17,7 +18,7 @@ func newReplicatesCommand() *replicatesCmd {
 		fs:   flag.NewFlagSet("replicates", flag.ExitOnError),
 	}
 
-	// rajoute tes flags ici (pas besoin de les Parse())
+	cmd.fs.StringVar(&cmd.args.pFlag, "p", ".", "The directory where the search begins (can be relative or absolute)")
 
 	return cmd
 }
@@ -32,8 +33,32 @@ func (c *replicatesCmd) Init(args []string) error {
 
 func (c *replicatesCmd) Run() error {
 
-	// rajoute ton main ici
-	fmt.Println("todo @Eloi")
+	// Rebuild absolute path of given directory (working directory by default)
+	var absPath string
+	if !filepath.IsAbs(c.args.pFlag) {
+		wd, err := filepath.Abs(".")
+		if err != nil {
+			panic(err)
+		}
+		absPath = filepath.Clean(wd + "/" + c.args.pFlag)
+
+	} else {
+		absPath = filepath.Clean(c.args.pFlag)
+	}
+
+	// TODO : check if directory exists
+
+	// Setting up the search
+	initNode := &node{path: absPath}
+	replicates := &replicates{}
+	if c.args.vFlag {
+		fmt.Println("Initial path :", initNode.path)
+	}
+
+	// Start of the search
+	if !initNode.accept(replicates, c.args) {
+		fmt.Println("Not Found !")
+	}
 
 	return nil
 }
