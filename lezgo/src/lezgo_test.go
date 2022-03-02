@@ -42,9 +42,12 @@ func createFile(n string, s int64) {
 func TestNoCommand(t *testing.T) {
 	out, err := exec.Command("./lezgo").Output()
 	if err != nil {
+		t.Fatalf(err.Error())
 		t.Fail()
 	}
-	if string(out) != "Expected a command\nList of available commands : search replicates\n" {
+	want := "Expected a command\nList of available commands : search replicates\n"
+	if string(out) != want {
+		t.Fatalf("\ngot \n%vwant\n%v", string(out), want)
 		t.Fail()
 	}
 }
@@ -54,7 +57,9 @@ func TestSearchNoArg(t *testing.T) {
 	if err != nil {
 		t.Fail()
 	}
-	if string(out) != "Must pass an argument\n" {
+	want := "Must pass an argument\n"
+	if string(out) != want {
+		t.Fatalf("\ngot \n%vwant\n%v", string(out), want)
 		t.Fail()
 	}
 }
