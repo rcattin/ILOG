@@ -17,6 +17,8 @@ func newReplicatesCommand() *replicatesCmd {
 		fs:   flag.NewFlagSet("replicates", flag.ExitOnError),
 	}
 
+	// rajoute tes flags ici (pas besoin de les Parse())
+
 	return cmd
 }
 
@@ -25,12 +27,12 @@ func (c *replicatesCmd) Name() string {
 }
 
 func (c *replicatesCmd) Init(args []string) error {
-	fmt.Println(c.args)
 	return c.fs.Parse(args)
 }
 
 func (c *replicatesCmd) Run() error {
 
+	// rajoute ton main ici
 	fmt.Println("todo @Eloi")
 
 	return nil

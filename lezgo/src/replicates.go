@@ -5,6 +5,6 @@ type replicates struct {
 }
 
 func (s *replicates) visitNode(n *node, args argList) bool {
-
+	// rajoute ta fomction de visite ici
 	return true
 }
