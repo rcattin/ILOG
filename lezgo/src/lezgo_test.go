@@ -78,7 +78,7 @@ func TestSearchNoArg(t *testing.T) {
 }
 
 func TestSearchBadPath(t *testing.T) {
-	out, err := exec.Command("./lezgo", "search", "-d=test", "-p=not/a/path").Output()
+	out, err := exec.Command("./lezgo", "search", "test", "-p=not/a/path").Output()
 	if err != nil {
 		t.Fail()
 	}
@@ -101,22 +101,22 @@ func TestSearch(t *testing.T) {
 	}{
 		{
 			"OneDir-OneFile",
-			[]string{"search", "-d=a", "-p=test"},
+			[]string{"search", "a", "-p=test"},
 			wd + "/test/a\n\tSize : 100 octets\n",
 		},
 		{
 			"OneDir-ThreeFiles",
-			[]string{"search", "-d=h", "-p=test"},
+			[]string{"search", "h", "-p=test"},
 			wd + "/test/h\n\tSize : 66 octets\n",
 		},
 		{
 			"TwoDir-Empty",
-			[]string{"search", "-d=d", "-p=test"},
+			[]string{"search", "d", "-p=test"},
 			wd + "/test/b/d\n\tSize : 0 octets\n" + wd + "/test/c/d\n\tSize : 0 octets\n",
 		},
 		{
 			"OneDir-SubDirAndFile",
-			[]string{"search", "-d=f", "-p=test"},
+			[]string{"search", "f", "-p=test"},
 			wd + "/test/c/f\n\tSize : 150 octets\n",
 		},
 		// Add tests here
