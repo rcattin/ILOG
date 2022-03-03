@@ -11,20 +11,15 @@ type argList struct {
 	vFlag, hFlag bool
 }
 
-type Runner interface {
-	Init([]string) error
-	Run() error
-	Name() string
-}
-
 func root(args []string) error {
 	if len(args) < 1 {
 		return errors.New("Expected a command\nList of available commands : search replicates")
 	}
 
-	cmds := []Runner{
+	cmds := []runner{
 		newSearchCommand(),
 		newReplicatesCommand(),
+		newHelpCommand(),
 	}
 
 	subcommand := os.Args[1]
@@ -42,6 +37,6 @@ func root(args []string) error {
 func main() {
 	if err := root(os.Args[1:]); err != nil {
 		fmt.Println(err)
-		os.Exit(1)
+		os.Exit(0)
 	}
 }

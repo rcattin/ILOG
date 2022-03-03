@@ -52,6 +52,19 @@ func TestNoCommand(t *testing.T) {
 	}
 }
 
+func TestBadCommand(t *testing.T) {
+	out, err := exec.Command("./lezgo", "test").Output()
+	if err != nil {
+		t.Fatalf(err.Error())
+		t.Fail()
+	}
+	want := "Unknown subcommand: test\n"
+	if string(out) != want {
+		t.Fatalf("\ngot \n%vwant\n%v", out, []byte(want))
+		t.Fail()
+	}
+}
+
 func TestSearchNoArg(t *testing.T) {
 	out, err := exec.Command("./lezgo", "search").Output()
 	if err != nil {
@@ -59,7 +72,19 @@ func TestSearchNoArg(t *testing.T) {
 	}
 	want := "Must pass an argument\n"
 	if string(out) != want {
-		t.Fatalf("\ngot \n%vwant\n%v", string(out), want)
+		t.Errorf("\ngot \n%vwant\n%v", string(out), want)
+		t.Fail()
+	}
+}
+
+func TestSearchBadPath(t *testing.T) {
+	out, err := exec.Command("./lezgo", "search", "-d=test", "-p=not/a/path").Output()
+	if err != nil {
+		t.Fail()
+	}
+	want := "Given path does not exist\n"
+	if string(out) != want {
+		t.Errorf("\ngot \n%vwant\n%v", string(out), want)
 		t.Fail()
 	}
 }

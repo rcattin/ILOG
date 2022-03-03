@@ -21,8 +21,8 @@ func newSearchCommand() *searchCmd {
 
 	cmd.fs.StringVar(&cmd.args.pFlag, "p", ".", "The directory where the search begins (can be relative or absolute)")
 	cmd.fs.StringVar(&cmd.args.dFlag, "d", "", "The directory to search")
-	cmd.fs.BoolVar(&cmd.args.vFlag, "v", false /* TODO */, "Explain")
-	cmd.fs.BoolVar(&cmd.args.hFlag, "h", false, "Print help")
+	cmd.fs.BoolVar(&cmd.args.vFlag, "v", false, "To see where the search is made")
+	cmd.fs.BoolVar(&cmd.args.hFlag, "h", false, "To print this help")
 
 	return cmd
 }
@@ -36,6 +36,11 @@ func (c *searchCmd) Init(args []string) error {
 }
 
 func (c *searchCmd) Run() error {
+
+	if c.args.hFlag {
+		c.Help()
+		os.Exit(0)
+	}
 
 	if c.args.dFlag == "" {
 		fmt.Println("Must pass an argument")
@@ -56,6 +61,11 @@ func (c *searchCmd) Run() error {
 	}
 
 	// TODO : check if directory exists
+	_, err := os.Stat(absPath)
+	if os.IsNotExist(err) {
+		fmt.Println("Given path does not exist")
+		os.Exit(0)
+	}
 
 	// Setting up the search
 	initNode := &node{path: absPath}
@@ -70,4 +80,13 @@ func (c *searchCmd) Run() error {
 	}
 
 	return nil
+}
+
+func (c *searchCmd) Help() {
+	fmt.Println("usage: lezgo search -d [dirName] [other flags]")
+	fmt.Println()
+	fmt.Println("'lezgo search' finds every directory matching the given name in the working directory and prints their size")
+	fmt.Println()
+	fmt.Println("The flags handled by 'lezgo search' are:")
+	c.fs.PrintDefaults()
 }

@@ -62,3 +62,5 @@ func (c *replicatesCmd) Run() error {
 
 	return nil
 }
+
+func (c *replicatesCmd) Help() {}
