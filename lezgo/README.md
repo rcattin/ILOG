@@ -1,5 +1,3 @@
-// french below
-
 # Lezgo
 
 lezgo is a command-line-interface written in Go during our ILOG project
