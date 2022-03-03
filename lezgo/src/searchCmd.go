@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -32,8 +33,7 @@ func (c *searchCmd) Name() string {
 
 func (c *searchCmd) Init(args []string) error {
 	if len(args) == 0 || args[0][0:1] == "-" {
-		fmt.Println("Must pass an argument")
-		os.Exit(0)
+		return errors.New("Must pass an argument")
 	}
 	c.args.dFlag = args[0]
 	return c.fs.Parse(args[1:])
@@ -43,7 +43,7 @@ func (c *searchCmd) Run() error {
 
 	if c.args.hFlag {
 		c.Help()
-		os.Exit(0)
+		return nil
 	}
 
 	// Rebuild absolute path of given directory (working directory by default)
@@ -51,7 +51,7 @@ func (c *searchCmd) Run() error {
 	if !filepath.IsAbs(c.args.pFlag) {
 		wd, err := filepath.Abs(".")
 		if err != nil {
-			panic(err)
+			return err
 		}
 		absPath = filepath.Clean(wd + "/" + c.args.pFlag)
 
@@ -62,8 +62,7 @@ func (c *searchCmd) Run() error {
 	// TODO : check if directory exists
 	_, err := os.Stat(absPath)
 	if os.IsNotExist(err) {
-		fmt.Println("Given path does not exist")
-		os.Exit(0)
+		return errors.New("Given path does not exist")
 	}
 
 	// Setting up the search

@@ -26,12 +26,16 @@ func root(args []string) error {
 
 	for _, cmd := range cmds {
 		if cmd.Name() == subcommand {
-			cmd.Init(os.Args[2:])
+			err := cmd.Init(os.Args[2:])
+			if err != nil {
+				return err
+			}
+
 			return cmd.Run()
 		}
 	}
 
-	return fmt.Errorf("Unknown subcommand: %s", subcommand)
+	return errors.New("Unknown subcommand: " + subcommand)
 }
 
 func main() {
