@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -20,7 +21,6 @@ func newSearchCommand() *searchCmd {
 	}
 
 	cmd.fs.StringVar(&cmd.args.pFlag, "p", ".", "The directory where the search begins (can be relative or absolute)")
-	cmd.fs.StringVar(&cmd.args.dFlag, "d", "", "The directory to search")
 	cmd.fs.BoolVar(&cmd.args.vFlag, "v", false, "To see where the search is made")
 	cmd.fs.BoolVar(&cmd.args.hFlag, "h", false, "To print this help")
 
@@ -32,19 +32,18 @@ func (c *searchCmd) Name() string {
 }
 
 func (c *searchCmd) Init(args []string) error {
-	return c.fs.Parse(args)
+	if len(args) == 0 || args[0][0:1] == "-" {
+		return errors.New("Must pass an argument")
+	}
+	c.args.dFlag = args[0]
+	return c.fs.Parse(args[1:])
 }
 
 func (c *searchCmd) Run() error {
 
 	if c.args.hFlag {
 		c.Help()
-		os.Exit(0)
-	}
-
-	if c.args.dFlag == "" {
-		fmt.Println("Must pass an argument")
-		os.Exit(0)
+		return nil
 	}
 
 	// Rebuild absolute path of given directory (working directory by default)
@@ -52,7 +51,7 @@ func (c *searchCmd) Run() error {
 	if !filepath.IsAbs(c.args.pFlag) {
 		wd, err := filepath.Abs(".")
 		if err != nil {
-			panic(err)
+			return err
 		}
 		absPath = filepath.Clean(wd + "/" + c.args.pFlag)
 
@@ -63,8 +62,7 @@ func (c *searchCmd) Run() error {
 	// TODO : check if directory exists
 	_, err := os.Stat(absPath)
 	if os.IsNotExist(err) {
-		fmt.Println("Given path does not exist")
-		os.Exit(0)
+		return errors.New("Given path does not exist")
 	}
 
 	// Setting up the search
@@ -83,7 +81,7 @@ func (c *searchCmd) Run() error {
 }
 
 func (c *searchCmd) Help() {
-	fmt.Println("usage: lezgo search -d [dirName] [other flags]")
+	fmt.Println("usage: lezgo search [dirName] [-OPTIONS]")
 	fmt.Println()
 	fmt.Println("'lezgo search' finds every directory matching the given name in the working directory and prints their size")
 	fmt.Println()

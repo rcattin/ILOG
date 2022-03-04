@@ -55,4 +55,6 @@ func (c *helpCmd) Help() {
 	fmt.Println("lezgo is a small command-line-interface with two sub commands :")
 	fmt.Println("\t'lezgo search' finds every directory matching the given name in the working directory and prints their size")
 	fmt.Println("\t'lezgo replicates' does stuff")
+	fmt.Println()
+	fmt.Println("Type 'lezgo help [subcommand name]' to get more info about a subcommand")
 }
