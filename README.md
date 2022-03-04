@@ -1,5 +1,5 @@
 # ILOG
 
-Repository for IMT Nord Europe's ILOG UV
+Repository pour l'UV ILOG - IMT Nord Europe
+Eloi & Rafael
 
-https://mylearningspace.imt-lille-douai.fr/pluginfile.php/37812/mod_scorm/content/5/presentation.html
