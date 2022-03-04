@@ -36,6 +36,7 @@ func (c *searchCmd) Init(args []string) error {
 		return errors.New("Must pass an argument")
 	}
 	c.args.dFlag = args[0]
+
 	return c.fs.Parse(args[1:])
 }
 
