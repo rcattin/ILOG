@@ -12,7 +12,8 @@
             "program": "${fileDirname}",
             "args": [
                 "replicates",
-                "-p",".."
+                "-p","..",
+                "-v"
             ]
         },
         {

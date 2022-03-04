@@ -19,6 +19,7 @@ func newReplicatesCommand() *replicatesCmd {
 	}
 
 	cmd.fs.StringVar(&cmd.args.pFlag, "p", ".", "The directory where the search begins (can be relative or absolute)")
+	cmd.fs.BoolVar(&cmd.args.vFlag, "v", false, "Extra details")
 
 	return cmd
 }
@@ -64,7 +65,12 @@ func (c *replicatesCmd) Run() error {
 			if rep.numReplicates > 1 {
 				fmt.Println(rep.numReplicates, "duplicates of this file : ")
 				for _, path := range rep.paths {
-					fmt.Println(path)
+					fmt.Print(path)
+					if c.args.vFlag {
+						fmt.Printf("  \tHashCode : %x", rep.hashcode)
+						fmt.Printf("  \tSize : %d bytes", rep.size)
+					}
+					fmt.Print("\n")
 				}
 				fmt.Println()
 			}
@@ -74,4 +80,6 @@ func (c *replicatesCmd) Run() error {
 	return nil
 }
 
-func (c *replicatesCmd) Help() {}
+func (c *replicatesCmd) Help() {
+
+}
