@@ -57,7 +57,18 @@ func (c *replicatesCmd) Run() error {
 
 	// Start of the search
 	if !initNode.accept(replicates, c.args) {
-		fmt.Println("Not Found !")
+		fmt.Println("No duplicates found!")
+	} else {
+		fmt.Println("Duplicates found : \n")
+		for _, rep := range replicates.files {
+			if rep.numReplicates > 1 {
+				fmt.Println(rep.numReplicates, "duplicates of this file : ")
+				for _, path := range rep.paths {
+					fmt.Println(path)
+				}
+				fmt.Println()
+			}
+		}
 	}
 
 	return nil
