@@ -59,7 +59,8 @@ func (c *replicatesCmd) Run() error {
 	if !initNode.accept(replicates, c.args) {
 		fmt.Println("No duplicates found!")
 	} else {
-		fmt.Println("Duplicates found : \n")
+		fmt.Println("Duplicates found :")
+		fmt.Println()
 		for _, rep := range replicates.files {
 			if rep.numReplicates > 1 {
 				fmt.Println(rep.numReplicates, "duplicates of this file : ")
