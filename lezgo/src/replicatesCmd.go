@@ -74,4 +74,11 @@ func (c *replicatesCmd) Run() error {
 	return nil
 }
 
-func (c *replicatesCmd) Help() {}
+func (c *replicatesCmd) Help() {
+	fmt.Println("usage: lezgo replicates [-OPTIONS]")
+	fmt.Println()
+	fmt.Println("'lezgo replicates' finds all identical documents in the working directory")
+	fmt.Println()
+	fmt.Println("The flags handled by 'lezgo replicates' are:")
+	c.fs.PrintDefaults()
+}
